@@ -78,7 +78,11 @@ function displayResult(result) {
         display.removeChild(v);
     }
     var v = document.createElement('text');
-    v.textContent = result;
+    if (typeof result == "number" && result%1 !==0) {
+        v.textContent = result.toFixed(4);
+    } else {
+        v.textContent = result;
+    }
     v.classList.add('result');
     display.appendChild(v);
 }
