@@ -36,6 +36,8 @@ body {
     border-image: initial;
     border-radius:4px;
     margin: 12px;
+    font-family: 'Cute Font';
+    font-size: 60px;
 }
 
 .keypad {
