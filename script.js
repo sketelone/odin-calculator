@@ -3,6 +3,7 @@ let result = 0;
 let num = 0;
 let oper = "";
 let newCalc = true;
+let newDisplay = true;
 
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
@@ -24,8 +25,9 @@ function getInput(e) {
     } else if (e.srcElement.className == "oper") {
         oper = e.srcElement.id;
     } else if (e.srcElement.id == "enter") {
-        operate(result,num,oper);
+        result = operate(result,num,oper);
         displayResult(result);
+        newDisplay = false;
         console.log(result, num, oper)
     } else if (e.srcElement.id == "clear") {
         clear();
@@ -34,18 +36,23 @@ function getInput(e) {
 
 function operate(result,num,oper) {
     if (oper == "add") {
-        var added = add(result,num);
-        result = added;
-        console.log(result)
+        result = add(result,num);
+        return result;
     } else if (oper =="subtract") {
         result = subtract(result,num)
+        return result;
         console.log(result)
     } 
 };
 
 function displayResult(result) {
+    if (newDisplay == false) {
+        var v = document.querySelector('.result');
+        display.removeChild(v);
+    }
     var v = document.createElement('h1');
     v.textContent = result;
+    v.classList.add('result');
     display.appendChild(v);
 }
 
@@ -54,6 +61,9 @@ function clear() {
     result = 0;
     num = 0;
     oper = "";
+    var v = document.querySelector('.result');
+    display.removeChild(v);
+    newDisplay == true;
     console.log(result, num, oper)
 };
 
