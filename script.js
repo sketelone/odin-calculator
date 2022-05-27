@@ -1,7 +1,10 @@
+//need to fix code so that you can do multiple digit
+//numbers duh 
+
 
 //initialize variables
-let result = 0;
-let num = 0;
+let result = "";
+let num = "";
 let oper = "";
 let newCalc = true;
 let newDisplay = true;
@@ -17,16 +20,23 @@ function getInput(e) {
     // get input from buttons
     if (e.srcElement.className == "num") {
         if (newCalc==true) {
-            result = parseFloat(e.srcElement.id);
+            result += e.srcElement.id;
+            displayResult(result);
+            newDisplay = false;
             // console.log(result)
-            newCalc = false;
+            // newCalc = false;
         } else {
-            num = parseFloat(e.srcElement.id);
+            num += e.srcElement.id;
+            displayResult(num);
+            newDisplay = false;
             // console.log(num)
         }
     } else if (e.srcElement.className == "oper") {
         oper = e.srcElement.id;
+        newCalc = false;
     } else if (e.srcElement.id == "enter") {
+        result = parseFloat(result);
+        num = parseFloat(num);
         if (oper=="") {
             displayResult(result);
             newDisplay = false;
