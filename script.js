@@ -1,5 +1,3 @@
-//need to fix code so that you can do multiple digit
-//numbers duh 
 
 
 //initialize variables
@@ -43,6 +41,7 @@ function getInput(e) {
         } else {
             result = operate(result,num,oper);
             displayResult(result);
+            num = "";
             newDisplay = false;
         }
         // console.log(result, num, oper)
@@ -69,6 +68,7 @@ function operate(result,num,oper) {
         return result;
         // console.log(result)
     } 
+    // num = toString(num);
 };
 
 function displayResult(result) {
@@ -86,8 +86,8 @@ function displayResult(result) {
 function clear() {
     //reset values and clear display
     newCalc = true;
-    result = 0;
-    num = 0;
+    result = "";
+    num = "";
     oper = "";
     if (newDisplay == false) {
         var v = document.querySelector('.result');
