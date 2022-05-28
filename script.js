@@ -1,11 +1,10 @@
-
+//add neg and decimal functionality
 
 //initialize variables
 let result = "";
 let num = "";
 let oper = "";
-let newCalc = true;
-let newDisplay = true;
+let newDisplay = true; //tracks whether display should be refreshed
 
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
@@ -17,38 +16,63 @@ buttons.forEach(button => {
 function getInput(e) {
     // get input from buttons
     if (e.srcElement.className == "num") {
-        if (newCalc==true) {
-            result += e.srcElement.id;
-            displayResult(result);
-            newDisplay = false;
-            // console.log(result)
-            // newCalc = false;
-        } else {
             num += e.srcElement.id;
             displayResult(num);
-            newDisplay = false;
-            // console.log(num)
-        }
+        // if (result == "") {
+        //     num += e.srcElement.id;
+        //     displayResult(result);
+        //     // newDisplay = false;
+        //     // console.log(result)
+        // } else {
+        //     num += e.srcElement.id;
+        //     displayResult(num);
+        //     // newDisplay = false;
+        //     // console.log(num)
+        // }
+    } else if (e.srcElement.id == "-") {
+        negative(e,result);
     } else if (e.srcElement.className == "oper") {
-        oper = e.srcElement.id;
-        newCalc = false;
+        if (num == "") {
+            result = num;
+            num = "";
+            oper = e.srcElement.id;
+        } else if (result == "") {
+            return;
+        } else {
+            oper = e.srcElement.id;
+        }
     } else if (e.srcElement.id == "enter") {
         result = parseFloat(result);
         num = parseFloat(num);
         if (oper=="") {
             displayResult(result);
-            newDisplay = false;
+            // newDisplay = false;
         } else {
             result = operate(result,num,oper);
             displayResult(result);
             num = "";
-            newDisplay = false;
+            // newDisplay = false;
         }
         // console.log(result, num, oper)
     } else if (e.srcElement.id == "clear") {
         clear();
     }
 };
+
+function negative(e, result) {
+    if (typeof result == "number") {
+        console.log("neg");
+        result = -1*result;
+        displayResult(result);
+        // newDisplay = false;
+    } else {
+        console.log("neg neg");
+        result = e.srcElement.id + toString(result);
+        displayResult(result);
+        // newDisplay = false;
+        console.log(result)
+    }
+}
 
 function operate(result,num,oper) {
     //call operations on numbers input by user
@@ -73,7 +97,7 @@ function operate(result,num,oper) {
 
 function displayResult(result) {
     //display result 
-    if (newDisplay == false) {
+    if (oper != "") {
         var v = document.querySelector('.result');
         display.removeChild(v);
     }
@@ -89,15 +113,14 @@ function displayResult(result) {
 
 function clear() {
     //reset values and clear display
-    newCalc = true;
+    if (oper != "" || result != "") {
+        var v = document.querySelector('.result');
+        display.removeChild(v);
+        // newDisplay = true;
+    }
     result = "";
     num = "";
     oper = "";
-    if (newDisplay == false) {
-        var v = document.querySelector('.result');
-        display.removeChild(v);
-        newDisplay = true;
-    }
     // console.log(result, num, oper)
 };
 
