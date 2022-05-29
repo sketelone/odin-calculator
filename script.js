@@ -4,6 +4,7 @@
 let result = "";
 let num = "";
 let oper = "";
+let displayValue = "";
 let newDisplay = true; //tracks whether display should be refreshed
 
 const display = document.querySelector('.display');
@@ -30,7 +31,13 @@ function getInput(e) {
         //     // console.log(num)
         // }
     } else if (e.srcElement.id == "-") {
-        negative(e,result);
+        if (result == displayValue) {
+            result = negative(e,result);
+            displayResult(result);
+        } else {
+            num = negative(e,num);
+            displayResult(num)
+        }   
     } else if (e.srcElement.className == "oper") {
         if (result == "") {
             result = num;
@@ -49,8 +56,8 @@ function getInput(e) {
             // newDisplay = false;
         } else {
             result = operate(result,num,oper);
-            displayResult(result);
             num = "";
+            displayResult(result);
             // newDisplay = false;
         }
         // console.log(result, num, oper)
@@ -59,16 +66,14 @@ function getInput(e) {
     }
 };
 
-function negative(e, result) {
-    if (typeof result == "number") {
-        console.log("neg");
-        result = -1*result;
-        displayResult(result);
+function negative(e, value) {
+    if (typeof value == "number") {
+        console.log("neg num");
+        return -value;
         // newDisplay = false;
     } else {
-        console.log("neg neg");
-        result = e.srcElement.id + toString(result);
-        displayResult(result);
+        console.log("neg string");
+        return e.srcElement.id + toString(value);
         // newDisplay = false;
         console.log(result)
     }
@@ -92,12 +97,11 @@ function operate(result,num,oper) {
         return result;
         // console.log(result)
     } 
-    num = "";
 };
 
 function displayResult(string) {
     //display result 
-    if (newDisplay != true) {
+    if (displayValue != "") {
         var v = document.querySelector('.result');
         display.removeChild(v);
     }
@@ -113,7 +117,7 @@ function displayResult(string) {
     }
     v.classList.add('result');
     display.appendChild(v);
-    newDisplay=false;
+    displayValue=v;
 }
 
 function clear() {
@@ -123,6 +127,7 @@ function clear() {
         display.removeChild(v);
         newDisplay = true;
     }
+    displayValue = "";
     result = "";
     num = "";
     oper = "";
