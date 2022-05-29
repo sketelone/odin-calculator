@@ -32,11 +32,11 @@ function getInput(e) {
     } else if (e.srcElement.id == "-") {
         negative(e,result);
     } else if (e.srcElement.className == "oper") {
-        if (num == "") {
+        if (result == "") {
             result = num;
             num = "";
             oper = e.srcElement.id;
-        } else if (result == "") {
+        } else if (newDisplay == true) {
             return;
         } else {
             oper = e.srcElement.id;
@@ -92,12 +92,12 @@ function operate(result,num,oper) {
         return result;
         // console.log(result)
     } 
-    // num = toString(num);
+    num = "";
 };
 
 function displayResult(result) {
     //display result 
-    if (oper != "") {
+    if (newDisplay != true) {
         var v = document.querySelector('.result');
         display.removeChild(v);
     }
@@ -109,6 +109,7 @@ function displayResult(result) {
     }
     v.classList.add('result');
     display.appendChild(v);
+    newDisplay=false;
 }
 
 function clear() {
@@ -116,7 +117,7 @@ function clear() {
     if (oper != "" || result != "") {
         var v = document.querySelector('.result');
         display.removeChild(v);
-        // newDisplay = true;
+        newDisplay = true;
     }
     result = "";
     num = "";
