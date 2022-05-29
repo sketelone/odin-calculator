@@ -95,17 +95,21 @@ function operate(result,num,oper) {
     num = "";
 };
 
-function displayResult(result) {
+function displayResult(string) {
     //display result 
     if (newDisplay != true) {
         var v = document.querySelector('.result');
         display.removeChild(v);
     }
     var v = document.createElement('text');
-    if (typeof result == "number" && result%1 !==0) {
-        v.textContent = result.toFixed(4);
+    if (isNaN(string) == true) {
+        v.textContent = "ERROR";
+    } else if (typeof string == "number" && string%1 !==0) {
+        v.textContent = string.toFixed(4);
+    } else if (isNaN(string)) {
+        v.textContent = "ERROR";
     } else {
-        v.textContent = result;
+        v.textContent = string;
     }
     v.classList.add('result');
     display.appendChild(v);
