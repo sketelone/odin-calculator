@@ -22,12 +22,10 @@ function getInput(e) {
         // if (result == "") {
         //     num += e.srcElement.id;
         //     displayResult(result);
-        //     // newDisplay = false;
         //     // console.log(result)
         // } else {
         //     num += e.srcElement.id;
         //     displayResult(num);
-        //     // newDisplay = false;
         //     // console.log(num)
         // }
     } else if (e.srcElement.id == "-") {
@@ -39,7 +37,9 @@ function getInput(e) {
             displayResult(num)
         }   
     } else if (e.srcElement.className == "oper") {
-        if (result == "") {
+        if (oper != "") {
+            displayError();
+        } else if (result == "") {
             result = num;
             num = "";
             oper = e.srcElement.id;
@@ -53,14 +53,13 @@ function getInput(e) {
         num = parseFloat(num);
         if (oper=="") {
             displayResult(result);
-            // newDisplay = false;
         } else {
             result = operate(result,num,oper);
             num = "";
+            oper="";
             displayResult(result);
-            // newDisplay = false;
         }
-        // console.log(result, num, oper)
+        console.log(result, num, oper)
     } else if (e.srcElement.id == "clear") {
         clear();
     }
@@ -70,11 +69,9 @@ function negative(e, value) {
     if (typeof value == "number") {
         console.log("neg num");
         return -value;
-        // newDisplay = false;
     } else {
         console.log("neg string");
         return e.srcElement.id + toString(value);
-        // newDisplay = false;
         console.log(result)
     }
 }
@@ -102,28 +99,44 @@ function operate(result,num,oper) {
 function displayResult(string) {
     //display result 
     if (displayValue != "") {
-        var v = document.querySelector('.result');
+        var v = document.querySelector('.displayValue');
         display.removeChild(v);
+        console.log(v)
     }
     var v = document.createElement('text');
     if (isNaN(string) == true) {
-        v.textContent = "ERROR";
+        displayError();
     } else if (typeof string == "number" && string%1 !==0) {
         v.textContent = string.toFixed(4);
-    } else if (isNaN(string)) {
-        v.textContent = "ERROR";
     } else {
         v.textContent = string;
     }
-    v.classList.add('result');
+    v.classList.add('displayValue');
     display.appendChild(v);
     displayValue=v;
+    console.log(v)
+    newDisplay = false;
+}
+
+function displayError() {
+    //display result 
+    if (displayValue != "") {
+        var v = document.querySelector('.displayValue');
+        display.removeChild(v);
+        console.log(v)
+    }
+    var v = document.createElement('text');
+    v.textContent = "ERROR"
+    v.classList.add('displayValue');
+    display.appendChild(v);
+    displayValue=v;
+    newDisplay = false;
 }
 
 function clear() {
     //reset values and clear display
-    if (oper != "" || result != "") {
-        var v = document.querySelector('.result');
+    if (oper != "" || result != "" || num != "") {
+        var v = document.querySelector('.displayValue');
         display.removeChild(v);
         newDisplay = true;
     }
