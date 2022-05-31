@@ -29,10 +29,13 @@ function getInput(e) {
         //     // console.log(num)
         // }
     } else if (e.srcElement.id == "-") {
+        console.log(displayValue,result, num, oper)
         if (result == displayValue) {
+            console.log("result")
             result = negative(e,result);
             displayResult(result);
         } else {
+            console.log("num")
             num = negative(e,num);
             displayResult(num)
         }   
@@ -71,8 +74,7 @@ function negative(e, value) {
         return -value;
     } else {
         console.log("neg string");
-        return e.srcElement.id + toString(value);
-        console.log(result)
+        return e.srcElement.id + value;
     }
 }
 
@@ -99,7 +101,7 @@ function operate(result,num,oper) {
 function displayResult(string) {
     //display result 
     if (displayValue != "") {
-        var v = document.querySelector('.displayValue');
+        var v = document.querySelector('.displayed');
         display.removeChild(v);
         console.log(v)
     }
@@ -111,9 +113,9 @@ function displayResult(string) {
     } else {
         v.textContent = string;
     }
-    v.classList.add('displayValue');
+    v.classList.add('displayed');
     display.appendChild(v);
-    displayValue=v;
+    displayValue=v.textContent;
     console.log(v)
     newDisplay = false;
 }
@@ -121,22 +123,22 @@ function displayResult(string) {
 function displayError() {
     //display result 
     if (displayValue != "") {
-        var v = document.querySelector('.displayValue');
+        var v = document.querySelector('.displayed');
         display.removeChild(v);
         console.log(v)
     }
     var v = document.createElement('text');
     v.textContent = "ERROR"
-    v.classList.add('displayValue');
+    v.classList.add('displayed');
     display.appendChild(v);
     displayValue=v;
-    newDisplay = false;
+    newDisplay = true; //is this right?
 }
 
 function clear() {
     //reset values and clear display
     if (oper != "" || result != "" || num != "") {
-        var v = document.querySelector('.displayValue');
+        var v = document.querySelector('.displayed');
         display.removeChild(v);
         newDisplay = true;
     }
