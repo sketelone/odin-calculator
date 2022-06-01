@@ -58,10 +58,11 @@ function getResult(e) {
         }
     //get operator
     } else if (e.srcElement.className == "oper") {
+        //if operator is pressed twice, set operator to latest operator
         if (oper != "") {
-            console.log("no operator error")
-            displayError(1);
-            return;
+            oper = e.srcElement.id;
+            num = "";
+            return(result);
         } else if (result == "") {
             result = num;
             num = "";
@@ -148,6 +149,10 @@ function operate(result,num,oper) {
 
 //displays result or current value in lower part of window
 function displayResult(value) {
+    //if we're in an error state, skip
+    if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        return;
+    }
     if (displayValue != "") {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
