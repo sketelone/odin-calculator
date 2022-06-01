@@ -26,9 +26,8 @@ buttons.forEach(button => {
 //gets input from buttons
 function getInput(e) {
     console.log(result, num, oper)
-    //check if we just had an error
+    //if we just had an error, clear
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
-        console.log("there was an error")
         clear();
     }
     if (e.srcElement.className == "num") {
@@ -101,7 +100,7 @@ function getHistory(e) {
         stored += " " + e.srcElement.outerText + " ";
         displayHistory(stored);
         newHistory = true;
-        if (result%1 !==0) {
+        if (typeof result == "number" && result%1 !==0) {
             stored = result.toFixed(4);
         } else {
             stored = result;
