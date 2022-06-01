@@ -90,7 +90,7 @@ function getHistory(e) {
         displayHistory(stored);
         newHistory = true;
         stored = result;
-    }
+    } 
 }
 
 function negative(e, value) {
@@ -163,18 +163,17 @@ function displayHistory(string) {
     history.appendChild(v);
     historyValue = v.textContent;
     console.log(v)
-    // newDisplay = false;
 }
 
 function displayError() {
     //display result 
     clear();
+    newDisplay = false;
     var v = document.createElement('text');
     v.textContent = "ERROR"
     v.classList.add('displayed');
     display.appendChild(v);
     displayValue=v;
-    // newDisplay = true; //is this right?
 }
 
 function clear() {
@@ -189,6 +188,7 @@ function clear() {
     }
     displayValue = "";
     historyValue = "";
+    stored = "";
     result = "";
     num = "";
     oper = "";
