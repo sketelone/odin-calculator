@@ -120,8 +120,8 @@ function displayResult(value) {
     if (value == "divByZero") {
         displayError(2);
         return;
-    } else if (value == "-") {
-        v.textContent = "-";
+    } else if (value == "-" || value == ".") {
+        v.textContent = value;
     } else if (isNaN(value) == true) {
         console.log("NaN error")
         displayError(1);
