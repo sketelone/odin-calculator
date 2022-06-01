@@ -1,4 +1,7 @@
-//add neg and decimal functionality
+/* This code takes input from the html and emulates 
+a calculator with basic addition, subtraction, 
+multiplication and division capabilities. It includes 
+negative and decimal number functionalities. */
 
 //initialize variables
 let result = "";
@@ -10,20 +13,25 @@ let historyValue = "";
 let newDisplay = true; //tracks whether display should be refreshed
 let newHistory = true; //tracks whether history should be refreshed
 
+//create constants for referring to html elements
 const display = document.querySelector('.display');
 const history = document.querySelector('.history');
 const buttons = document.querySelectorAll('button');
 
+//when a button is clicked, log the input
 buttons.forEach(button => {
     button.addEventListener('click', getInput)
 });
 
+//gets input from buttons
 function getInput(e) {
+    //check if we just had an error
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         console.log("there was an error")
         clear();
     }
-    // get input from buttons
+    
+
     if (e.srcElement.className == "num") {
             num += e.srcElement.id;
             displayResult(num);
@@ -73,6 +81,7 @@ function getInput(e) {
     getHistory(e);
 };
 
+//gets history from buttons
 function getHistory(e) {
     //if button is a number, add number to history value and display
     if (e.srcElement.className == "num") {
@@ -95,8 +104,8 @@ function getHistory(e) {
     }
 }
 
+//calls operations on numbers input by user
 function operate(result,num,oper) {
-    //call operations on numbers input by user
     if (oper == "add") {
         result = add(result,num);
         return result;
@@ -114,8 +123,8 @@ function operate(result,num,oper) {
     } 
 };
 
+//displays result or current value in lower part of window
 function displayResult(value) {
-    //display result 
     if (displayValue != "") {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
@@ -141,6 +150,7 @@ function displayResult(value) {
     newDisplay = false;
 }
 
+//displays history in upper part of window
 function displayHistory(value) {
     //display history 
     //if not a new display, remove existing content
@@ -155,10 +165,8 @@ function displayHistory(value) {
     historyValue = v.textContent;
 }
 
+//displays errors in lower part of window
 function displayError(a) {
-    //display result 
-    // clear();
-    // newDisplay = false;
     var v = document.createElement('text');
     if (a == 1) {
         v.textContent="MOO! ERROR"
@@ -172,8 +180,8 @@ function displayError(a) {
     displayValue=v.textContent;
 }
 
+//resets values and clears display
 function clear() {
-    //reset values and clear display
     if (newDisplay == false) {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
