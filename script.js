@@ -25,16 +25,21 @@ buttons.forEach(button => {
 
 //gets input from buttons
 function getInput(e) {
+    console.log(result, num, oper)
     //check if we just had an error
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         console.log("there was an error")
         clear();
     }
-    
-
     if (e.srcElement.className == "num") {
+        if (result !="" && oper == "") {
+            clear();
             num += e.srcElement.id;
             displayResult(num);
+        } else {
+            num += e.srcElement.id;
+            displayResult(num);
+        }
     } else if (e.srcElement.className == "oper") {
         if (oper != "") {
             console.log("no operator error")
