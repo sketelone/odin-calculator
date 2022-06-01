@@ -53,7 +53,7 @@ function getInput(e) {
         if (result !="" && oper == "") {
             clear();
             num += e.srcElement.id;
-            return(num);
+            return(nm);
         } else {
             num += e.srcElement.id;
             return(num);
@@ -67,6 +67,7 @@ function getInput(e) {
             oper = e.srcElement.id;
             return(result);
         } else if (result == "") {
+            console.log("filling in result")
             result = num;
             num = "";
             oper = e.srcElement.id;
@@ -80,8 +81,6 @@ function getInput(e) {
     //get result
     } else if (e.srcElement.id == "enter") {
         if (result=="" && num=="" && oper=="") {
-            clear();
-            newDisplay == true;
             return("")
         } else {
             return(getResult());
@@ -168,6 +167,9 @@ function displayResult(value) {
     //if we're in an error state, skip
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         console.log("skip display result")
+        return;
+    // if nothing to show, return
+    } else if (result=="" && num=="" && oper=="") {
         return;
     }
     // if not a new display, remove existing content
