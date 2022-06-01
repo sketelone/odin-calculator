@@ -42,8 +42,12 @@ function getInput(e) {
         }
     } else if (e.srcElement.id == "enter") {
         console.log(result, oper, num)
-        result = parseFloat(result);
-        num = parseFloat(num);
+        if (result != "") {
+            result = parseFloat(result);
+        }
+        if (num != "") {
+            num = parseFloat(num);
+        }
         if (oper=="") {
             displayResult(result);
         } else {
