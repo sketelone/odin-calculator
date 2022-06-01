@@ -5,9 +5,11 @@ let result = "";
 let num = "";
 let oper = "";
 let displayValue = "";
+let historyValue = "";
 let newDisplay = true; //tracks whether display should be refreshed
 
 const display = document.querySelector('.display');
+const history = document.querySelector('.history');
 const buttons = document.querySelectorAll('button');
 
 buttons.forEach(button => {
@@ -15,6 +17,7 @@ buttons.forEach(button => {
 });
 
 function getInput(e) {
+    showHistory(e);
     // get input from buttons
     if (e.srcElement.className == "num") {
             num += e.srcElement.id;
@@ -41,6 +44,7 @@ function getInput(e) {
         }   
     } else if (e.srcElement.className == "oper") {
         if (oper != "") {
+            console.log("no operator error")
             displayError();
         } else if (result == "") {
             result = num;
@@ -67,6 +71,16 @@ function getInput(e) {
         clear();
     }
 };
+
+function showHistory(e) {
+    if (e.srcElement.className == "num") {
+        historyValue += e.srcElement.outerText;
+        displayHistory(historyValue);
+    } else if (e.srcElement.id != "clear") {
+        historyValue += " " + e.srcElement.outerText + " ";
+        displayHistory(historyValue);
+    }
+}
 
 function negative(e, value) {
     if (typeof value == "number") {
@@ -104,10 +118,13 @@ function displayResult(string) {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
         console.log(v)
+        console.log(displayValue, "display")
     }
     var v = document.createElement('text');
     if (isNaN(string) == true) {
+        console.log("NaN error")
         displayError();
+        return;
     } else if (typeof string == "number" && string%1 !==0) {
         v.textContent = string.toFixed(4);
     } else {
@@ -120,29 +137,46 @@ function displayResult(string) {
     newDisplay = false;
 }
 
+function displayHistory(string) {
+    //display history 
+    if (newDisplay == false) {
+        var v = document.querySelector('.historyValue');
+        history.removeChild(v);
+        // console.log(v)
+        // console.log(displayValue, "display")
+    }
+    var v = document.createElement('text');
+    v.textContent = string;
+    v.classList.add('historyValue');
+    history.appendChild(v);
+    historyValue = v.textContent;
+    console.log(v)
+    // newDisplay = false;
+}
+
 function displayError() {
     //display result 
-    if (displayValue != "") {
-        var v = document.querySelector('.displayed');
-        display.removeChild(v);
-        console.log(v)
-    }
+    clear();
     var v = document.createElement('text');
     v.textContent = "ERROR"
     v.classList.add('displayed');
     display.appendChild(v);
     displayValue=v;
-    newDisplay = true; //is this right?
+    // newDisplay = true; //is this right?
 }
 
 function clear() {
+    console.log(displayValue);
     //reset values and clear display
-    if (oper != "" || result != "" || num != "") {
+    if (newDisplay == false) {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
+        var w = document.querySelector('.historyValue');
+        history.removeChild(w);
         newDisplay = true;
     }
     displayValue = "";
+    historyValue = "";
     result = "";
     num = "";
     oper = "";

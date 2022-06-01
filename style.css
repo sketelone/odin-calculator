@@ -21,11 +21,12 @@ body {
     text-align: center;
 }
 
-.display {
+.window{
     display:flex;
     flex-wrap:wrap;
+    flex-direction:column;
     align-items:center;
-    justify-content: center;
+    justify-content: right;
     width: 400px;
     height: 100px;
     box-sizing: border-box;
@@ -37,7 +38,17 @@ body {
     border-radius:4px;
     margin: 12px;
     font-family: 'Cute Font';
+}
+
+.history {
+    font-size: 40px;
+    text-align: right;
+}
+
+.display {
     font-size: 60px;
+    text-align: right;
+    /* padding: 12px; */
 }
 
 .keypad {
