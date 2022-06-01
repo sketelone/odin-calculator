@@ -4,9 +4,11 @@
 let result = "";
 let num = "";
 let oper = "";
+let stored = "";
 let displayValue = "";
 let historyValue = "";
 let newDisplay = true; //tracks whether display should be refreshed
+let newHistory = true; //tracks whether history should be refreshed
 
 const display = document.querySelector('.display');
 const history = document.querySelector('.history');
@@ -17,7 +19,6 @@ buttons.forEach(button => {
 });
 
 function getInput(e) {
-    showHistory(e);
     // get input from buttons
     if (e.srcElement.className == "num") {
             num += e.srcElement.id;
@@ -70,15 +71,25 @@ function getInput(e) {
     } else if (e.srcElement.id == "clear") {
         clear();
     }
+    getHistory(e);
 };
 
-function showHistory(e) {
+function getHistory(e) {
+    //if button is a number, add number to history string and display
     if (e.srcElement.className == "num") {
-        historyValue += e.srcElement.outerText;
-        displayHistory(historyValue);
-    } else if (e.srcElement.id != "clear") {
-        historyValue += " " + e.srcElement.outerText + " ";
-        displayHistory(historyValue);
+        stored += e.srcElement.outerText;
+        console.log(stored)
+        displayHistory(stored);
+    //if button is an operator, add number to history string with spaces and display
+    } else if (e.srcElement.className == "oper") {
+        stored += " " + e.srcElement.outerText + " ";
+        displayHistory(stored);
+    //if button is enter, add enter to history string with spaces, display, refresh history and set history to result
+    } else if (e.srcElement.id == "enter") {
+        stored += " " + e.srcElement.outerText + " ";
+        displayHistory(stored);
+        newHistory = true;
+        stored = result;
     }
 }
 
@@ -139,7 +150,8 @@ function displayResult(string) {
 
 function displayHistory(string) {
     //display history 
-    if (newDisplay == false) {
+    //if not a new display, remove existing content
+    if (historyValue != "") {
         var v = document.querySelector('.historyValue');
         history.removeChild(v);
         // console.log(v)
