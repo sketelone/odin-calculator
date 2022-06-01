@@ -26,11 +26,13 @@ buttons.forEach(button => {
 //gets input from buttons
 function getInput(e) {
     console.log(result, num, oper)
-    //if we just had an error, clear
+    //if we just had an error, start new calc
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         clear();
     }
+    //get number
     if (e.srcElement.className == "num") {
+        //if hitting a new number after getting result, start new calc
         if (result !="" && oper == "") {
             clear();
             num += e.srcElement.id;
@@ -39,6 +41,7 @@ function getInput(e) {
             num += e.srcElement.id;
             displayResult(num);
         }
+    //get operator
     } else if (e.srcElement.className == "oper") {
         if (oper != "") {
             console.log("no operator error")
@@ -52,8 +55,8 @@ function getInput(e) {
         } else {
             oper = e.srcElement.id;
         }
+    //evaluate to get result
     } else if (e.srcElement.id == "enter") {
-        console.log(result, oper, num)
         //convert result to float
         if (result != "") {
             result = parseFloat(result);
@@ -71,6 +74,7 @@ function getInput(e) {
             oper="";
             displayResult(result);
             console.log("no oper")
+        //smooooth operator  
         } else {
             result = operate(result,num,oper);
             console.log("oper")
@@ -78,11 +82,12 @@ function getInput(e) {
             oper="";
             displayResult(result);
         }
-        console.log(result, num, oper)
+    //clear
     } else if (e.srcElement.id == "clear") {
         clear();
     }
-    getHistory(e);
+    //get and display history
+    displayHistory(getHistory(e));
 };
 
 //gets history from buttons
@@ -90,21 +95,22 @@ function getHistory(e) {
     //if button is a number, add number to history value and display
     if (e.srcElement.className == "num") {
         stored += e.srcElement.id;
-        displayHistory(stored);
+        return(stored);
     //if button is an operator, add number to history value with spaces and display
     } else if (e.srcElement.className == "oper") {
         stored += " " + e.srcElement.outerText + " ";
-        displayHistory(stored);
+        return(stored);
     //if button is enter, add enter to history value with spaces, display, refresh history and set history to result
     } else if (e.srcElement.id == "enter") {
         stored += " " + e.srcElement.outerText + " ";
-        displayHistory(stored);
+        var v = stored;
         newHistory = true;
         if (typeof result == "number" && result%1 !==0) {
             stored = result.toFixed(4);
         } else {
             stored = result;
         }
+        return(v);
     }
 }
 
