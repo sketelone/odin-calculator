@@ -27,17 +27,6 @@ function getInput(e) {
     if (e.srcElement.className == "num") {
             num += e.srcElement.id;
             displayResult(num);
-    // } else if (e.srcElement.id == "-") {
-    //     console.log(displayValue,result, num, oper)
-    //     if (result == displayValue) {
-    //         console.log("result")
-    //         result = negative(e,result);
-    //         displayResult(result);
-    //     } else {
-    //         console.log("num")
-    //         num = negative(e,num);
-    //         displayResult(num)
-    //     }   
     } else if (e.srcElement.className == "oper") {
         if (oper != "") {
             console.log("no operator error")
@@ -87,16 +76,6 @@ function getHistory(e) {
         stored = result;
     }
 }
-
-// function negative(e, value) {
-//     if (typeof value == "number") {
-//         console.log("neg num");
-//         return -value;
-//     } else {
-//         console.log("neg value");
-//         return e.srcElement.id + value;
-//     }
-// }
 
 function operate(result,num,oper) {
     //call operations on numbers input by user
@@ -219,20 +198,3 @@ if (typeof a === "number" && typeof b === "number") {
         }
     }
 };
-  
-
-//   const power = function(a,b) {
-//     if (typeof a === "number" && typeof b === "number") {
-//       return a ** b;
-//     }
-//   };
-  
-//   const factorial = function(a) {
-//     let result = 1;
-//     if (typeof a === "number") {
-//       for (i=1;i<=a;i++) {
-//         result = result*i;
-//       }
-//     }
-//     return result;
-//   };
