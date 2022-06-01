@@ -18,42 +18,60 @@ const display = document.querySelector('.display');
 const history = document.querySelector('.history');
 const buttons = document.querySelectorAll('button');
 
-//when a button is clicked, log the input
+//when a button is clicked, run calculator
 buttons.forEach(button => {
-    button.addEventListener('click', getInput)
+    button.addEventListener('click', calculate)
 });
 
-//gets input from buttons
-function getInput(e) {
+//runs calculator
+function calculate(e) {
     console.log(result, num, oper)
     //if we just had an error, start new calc
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         clear();
     }
+    //get and display input
+    displayResult(getResult(e));
+
+    //get and display history
+    displayHistory(getHistory(e));
+
+    //clear
+    if (e.srcElement.id == "clear") {
+        clear();
+    }
+};
+
+//gets result from buttons
+function getResult(e) {
+    console.log(result, num, oper)
     //get number
     if (e.srcElement.className == "num") {
         //if hitting a new number after getting result, start new calc
         if (result !="" && oper == "") {
             clear();
             num += e.srcElement.id;
-            displayResult(num);
+            return(num);
         } else {
             num += e.srcElement.id;
-            displayResult(num);
+            return(num);
         }
     //get operator
     } else if (e.srcElement.className == "oper") {
         if (oper != "") {
             console.log("no operator error")
             displayError(1);
+            return;
         } else if (result == "") {
             result = num;
             num = "";
             oper = e.srcElement.id;
+            return(result);
         } else if (newDisplay == true) {
             return;
         } else {
             oper = e.srcElement.id;
+            return(result);
         }
     //evaluate to get result
     } else if (e.srcElement.id == "enter") {
@@ -72,23 +90,18 @@ function getInput(e) {
             }
             num = "";
             oper="";
-            displayResult(result);
             console.log("no oper")
+            return(result);
         //smooooth operator  
         } else {
             result = operate(result,num,oper);
             console.log("oper")
             num = "";
             oper="";
-            displayResult(result);
+            return(result);
         }
-    //clear
-    } else if (e.srcElement.id == "clear") {
-        clear();
-    }
-    //get and display history
-    displayHistory(getHistory(e));
-};
+    } 
+}
 
 //gets history from buttons
 function getHistory(e) {
