@@ -28,17 +28,18 @@ function calculate(e) {
     console.log("calculate",result, num, oper)
     //if we just had an error, start new calc
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        console.log("clear the error")
         clear();
-    }
-    //get and display input
-    displayResult(getInput(e));
-
-    //get and display history
-    displayHistory(getHistory(e));
-
-    //clear
-    if (e.srcElement.id == "clear") {
+        newDisplay == true;
+    } else if (e.srcElement.id == "clear") {
         clear();
+        return;
+    } else {
+        //get and display input
+        displayResult(getInput(e));
+
+        //get and display history
+        displayHistory(getHistory(e));
     }
     console.log("end of calculate",result, num, oper)
 };
@@ -131,7 +132,6 @@ function getResult(e) {
             result = operate(result,num,oper);
             console.log("oper", result, num, oper)
             num = "";
-            // oper="";
         }
         return(result);
     }
@@ -160,9 +160,10 @@ function operate(result,num,oper) {
 function displayResult(value) {
     //if we're in an error state, skip
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        console.log("skip display result")
         return;
     }
-    //if not a new display, remove existing content
+    // if not a new display, remove existing content
     if (displayValue != "") {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
@@ -190,8 +191,9 @@ function displayResult(value) {
 
 //displays history in upper part of window
 function displayHistory(value) {
-    //if we're in an error state, skip (required??)
+    //if we're in an error state, skip
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        console.log("skip display history")
         return;
     }
     //if not a new display, remove existing content
