@@ -40,6 +40,7 @@ function calculate(e) {
     if (e.srcElement.id == "clear") {
         clear();
     }
+    console.log("end of calculate",result, num, oper)
 };
 
 //gets result from buttons
@@ -60,9 +61,9 @@ function getInput(e) {
     } else if (e.srcElement.className == "oper") {
         //if operator is pressed twice, set operator to latest operator
         if (oper != "") {
-            oper = e.srcElement.id;
             result = getResult(e);
             stored = result;
+            oper = e.srcElement.id;
             return(result);
         } else if (result == "") {
             result = num;
@@ -121,15 +122,16 @@ function getResult(e) {
             result = num;
         }
         num = "";
-        oper="";
         console.log("no oper")
         return(result);
     //smooooth operator  
     } else {
-        result = operate(result,num,oper);
-        console.log("oper")
-        num = "";
-        oper="";
+        if (result != "" && num != "" && oper != "") {
+            result = operate(result,num,oper);
+            console.log("oper", result, num, oper)
+            num = "";
+            // oper="";
+        }
         return(result);
     }
 }
