@@ -25,13 +25,13 @@ buttons.forEach(button => {
 
 //runs calculator
 function calculate(e) {
-    console.log(result, num, oper)
+    console.log("calculate",result, num, oper)
     //if we just had an error, start new calc
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         clear();
     }
     //get and display input
-    displayResult(getResult(e));
+    displayResult(getInput(e));
 
     //get and display history
     displayHistory(getHistory(e));
@@ -43,8 +43,8 @@ function calculate(e) {
 };
 
 //gets result from buttons
-function getResult(e) {
-    console.log(result, num, oper)
+function getInput(e) {
+    console.log("getInput",result, num, oper)
     //get number
     if (e.srcElement.className == "num") {
         //if hitting a new number after getting result, start new calc
@@ -61,7 +61,8 @@ function getResult(e) {
         //if operator is pressed twice, set operator to latest operator
         if (oper != "") {
             oper = e.srcElement.id;
-            num = "";
+            result = getResult(e);
+            stored = result;
             return(result);
         } else if (result == "") {
             result = num;
@@ -74,34 +75,10 @@ function getResult(e) {
             oper = e.srcElement.id;
             return(result);
         }
-    //evaluate to get result
+    //get result
     } else if (e.srcElement.id == "enter") {
-        //convert result to float
-        if (result != "") {
-            result = parseFloat(result);
-        }
-        //convert num to float
-        if (num != "") {
-            num = parseFloat(num);
-        }
-        //if no operator is present, just display the number
-        if (oper=="") {
-            if (result == "") {
-                result = num;
-            }
-            num = "";
-            oper="";
-            console.log("no oper")
-            return(result);
-        //smooooth operator  
-        } else {
-            result = operate(result,num,oper);
-            console.log("oper")
-            num = "";
-            oper="";
-            return(result);
-        }
-    } 
+        return(getResult());
+    }
 }
 
 //gets history from buttons
@@ -125,6 +102,35 @@ function getHistory(e) {
             stored = result;
         }
         return(v);
+    }
+}
+
+//get result
+function getResult(e) {
+    //convert result to float
+    if (result != "") {
+        result = parseFloat(result);
+    }
+    //convert num to float
+    if (num != "") {
+        num = parseFloat(num);
+    }
+    //if no operator is present, just display the number
+    if (oper=="") {
+        if (result == "") {
+            result = num;
+        }
+        num = "";
+        oper="";
+        console.log("no oper")
+        return(result);
+    //smooooth operator  
+    } else {
+        result = operate(result,num,oper);
+        console.log("oper")
+        num = "";
+        oper="";
+        return(result);
     }
 }
 
@@ -153,6 +159,7 @@ function displayResult(value) {
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         return;
     }
+    //if not a new display, remove existing content
     if (displayValue != "") {
         var v = document.querySelector('.displayed');
         display.removeChild(v);
@@ -180,7 +187,10 @@ function displayResult(value) {
 
 //displays history in upper part of window
 function displayHistory(value) {
-    //display history 
+    //if we're in an error state, skip (required??)
+    if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        return;
+    }
     //if not a new display, remove existing content
     if (historyValue != "") {
         var v = document.querySelector('.historyValue');
