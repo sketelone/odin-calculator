@@ -42,16 +42,26 @@ function getInput(e) {
         }
     } else if (e.srcElement.id == "enter") {
         console.log(result, oper, num)
+        //convert result to float
         if (result != "") {
             result = parseFloat(result);
         }
+        //convert num to float
         if (num != "") {
             num = parseFloat(num);
         }
+        //if no operator is present, just display the number
         if (oper=="") {
+            if (result == "") {
+                result = num;
+            }
+            num = "";
+            oper="";
             displayResult(result);
+            console.log("no oper")
         } else {
             result = operate(result,num,oper);
+            console.log("oper")
             num = "";
             oper="";
             displayResult(result);
