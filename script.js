@@ -79,7 +79,13 @@ function getInput(e) {
         }
     //get result
     } else if (e.srcElement.id == "enter") {
-        return(getResult());
+        if (result=="" && num=="" && oper=="") {
+            clear();
+            newDisplay == true;
+            return("")
+        } else {
+            return(getResult());
+        }
     }
 }
 
@@ -121,7 +127,7 @@ function getResult(e) {
     //if no operator is present, just display the number
     if (oper=="") {
         if (result == "") {
-            result = num;
+            result = num;                
         }
         num = "";
         console.log("no oper")
@@ -132,6 +138,7 @@ function getResult(e) {
             result = operate(result,num,oper);
             console.log("oper", result, num, oper)
             num = "";
+            oper = "";
         }
         return(result);
     }
