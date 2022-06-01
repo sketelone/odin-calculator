@@ -108,6 +108,7 @@ function getHistory(e) {
 
 //get result
 function getResult(e) {
+    console.log("getting result...")
     //convert result to float
     if (result != "") {
         result = parseFloat(result);
@@ -126,7 +127,7 @@ function getResult(e) {
         return(result);
     //smooooth operator  
     } else {
-        if (result != "" && num != "" && oper != "") {
+        if (result !== "" && num !== "" && oper !== "") {
             result = operate(result,num,oper);
             console.log("oper", result, num, oper)
             num = "";
