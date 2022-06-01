@@ -19,8 +19,11 @@ buttons.forEach(button => {
 });
 
 function getInput(e) {
+    if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
+        console.log("there was an error")
+        clear();
+    }
     // get input from buttons
-    console.log("getting input...")
     if (e.srcElement.className == "num") {
             num += e.srcElement.id;
             displayResult(num);
@@ -68,7 +71,6 @@ function getInput(e) {
 };
 
 function getHistory(e) {
-    console.log("getting history...")
     //if button is a number, add number to history value and display
     if (e.srcElement.className == "num") {
         stored += e.srcElement.id;
@@ -97,7 +99,6 @@ function getHistory(e) {
 // }
 
 function operate(result,num,oper) {
-    console.log("operating...")
     //call operations on numbers input by user
     if (oper == "add") {
         result = add(result,num);
@@ -117,7 +118,6 @@ function operate(result,num,oper) {
 };
 
 function displayResult(value) {
-    console.log("displaying result...")
     //display result 
     if (displayValue != "") {
         var v = document.querySelector('.displayed');
@@ -145,7 +145,6 @@ function displayResult(value) {
 }
 
 function displayHistory(value) {
-    console.log("displaying history...")
     //display history 
     //if not a new display, remove existing content
     if (historyValue != "") {
@@ -160,25 +159,23 @@ function displayHistory(value) {
 }
 
 function displayError(a) {
-    console.log("displaying error...")
     //display result 
-    clear();
-    newDisplay = false;
+    // clear();
+    // newDisplay = false;
     var v = document.createElement('text');
     if (a == 1) {
-        v.textContent="MOO! SYNTAX ERROR"
+        v.textContent="MOO! ERROR"
     } else if (a == 2) {
-        v.textContent="MOO! YOU CAN'T DIVIDE BY ZERO"
+        v.textContent="MOO! DIV BY 0"
     } else {
         v.textContent="ERROR"
     }
     v.classList.add('displayed');
     display.appendChild(v);
-    displayValue=v;
+    displayValue=v.textContent;
 }
 
 function clear() {
-    console.log("clearing...")
     //reset values and clear display
     if (newDisplay == false) {
         var v = document.querySelector('.displayed');
