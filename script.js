@@ -159,7 +159,7 @@ function displayHistory(value) {
     historyValue = v.textContent;
 }
 
-function displayError() {
+function displayError(a) {
     console.log("displaying error...")
     //display result 
     clear();
