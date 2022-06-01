@@ -207,6 +207,7 @@ function clear() {
     oper = "";
 };
 
+//core calculation functions
 const add = function(a,b) {
     if (typeof a === "number" && typeof b === "number") {
       return a + b;
