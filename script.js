@@ -87,7 +87,11 @@ function getHistory(e) {
         stored += " " + e.srcElement.outerText + " ";
         displayHistory(stored);
         newHistory = true;
-        stored = result;
+        if (result%1 !==0) {
+            stored = result.toFixed(4);
+        } else {
+            stored = result;
+        }
     }
 }
 
@@ -145,7 +149,7 @@ function displayHistory(value) {
         history.removeChild(v);
     }
     var v = document.createElement('text');
-    v.textContent = value;
+    v.textContent = value;    
     v.classList.add('historyValue');
     history.appendChild(v);
     historyValue = v.textContent;
