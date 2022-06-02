@@ -59,6 +59,17 @@ body {
     justify-content: center;
 }
 
+.footer{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content: center;
+    align-items:bottom;
+    padding:120px;
+    font-family: 'sans-serif';
+    text-align: center;
+}
+
 .nums {
     display:flex;
     flex-wrap:wrap;
@@ -96,4 +107,8 @@ button {
     font-size: 60px;
     width: 200px;
     height: 100px;
+}
+
+a {
+    padding:20px;
 }
