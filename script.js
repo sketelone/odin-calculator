@@ -53,7 +53,7 @@ function getInput(e) {
         if (result !="" && oper == "") {
             clear();
             num += e.srcElement.id;
-            return(nm);
+            return(num);
         } else {
             num += e.srcElement.id;
             return(num);
