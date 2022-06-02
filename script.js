@@ -60,12 +60,24 @@ function getInput(e) {
         }
     //get operator
     } else if (e.srcElement.className == "oper") {
+        // if (num == "" && oper == "" && result == "") {
+        //     stored = result;
+        //     return(result);
+        // }
+        if (result=="" && num=="" && oper=="") {
+            return("")
+        }
         //if operator is pressed twice, set operator to latest operator
         if (oper != "") {
-            result = getResult(e);
-            stored = result;
-            oper = e.srcElement.id;
-            return(result);
+            if (num == "") {
+                stored = result;
+                return(result);
+            } else {
+                result = getResult(e);
+                stored = result;
+                oper = e.srcElement.id;
+                return(result);
+            }
         } else if (result == "") {
             console.log("filling in result")
             result = num;
@@ -90,6 +102,9 @@ function getInput(e) {
 
 //gets history from buttons
 function getHistory(e) {
+    if (result=="" && num=="" && oper=="") {
+        return("");
+    }
     //if button is a number, add number to history value and display
     if (e.srcElement.className == "num") {
         stored += e.srcElement.id;
@@ -169,7 +184,7 @@ function displayResult(value) {
         console.log("skip display result")
         return;
     // if nothing to show, return
-    } else if (result=="" && num=="" && oper=="") {
+    } else if (result=="" && num=="") {
         return;
     }
     // if not a new display, remove existing content
@@ -203,6 +218,9 @@ function displayHistory(value) {
     //if we're in an error state, skip
     if (typeof displayValue == "string" && displayValue.includes("MOO!") == true) {
         console.log("skip display history")
+        return;
+    // if nothing to show, return
+    } else if (result=="" && num=="") {
         return;
     }
     //if not a new display, remove existing content
