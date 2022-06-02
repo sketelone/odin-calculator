@@ -60,10 +60,6 @@ function getInput(e) {
         }
     //get operator
     } else if (e.srcElement.className == "oper") {
-        // if (num == "" && oper == "" && result == "") {
-        //     stored = result;
-        //     return(result);
-        // }
         if (result=="" && num=="" && oper=="") {
             return("")
         }
@@ -74,7 +70,13 @@ function getInput(e) {
                 return(result);
             } else {
                 result = getResult(e);
-                stored = result;
+                if (typeof result == "number" && result%1 !==0) {
+                    stored = result.toFixed(4);
+                } else if (typeof result == "number" && result>1000000) {
+                    stored = result.toExponential(2);
+                } else {
+                    stored = result;
+                }
                 oper = e.srcElement.id;
                 return(result);
             }
@@ -120,6 +122,8 @@ function getHistory(e) {
         newHistory = true;
         if (typeof result == "number" && result%1 !==0) {
             stored = result.toFixed(4);
+        } else if (typeof result == "number" && result>1000000) {
+            stored = result.toExponential(2);
         } else {
             stored = result;
         }
@@ -204,6 +208,8 @@ function displayResult(value) {
         return;
     } else if (typeof value == "number" && value%1 !==0) {
         v.textContent = value.toFixed(4);
+    } else if (typeof value == "number" && value>1000000) {
+        v.textContent = value.toExponential(2);
     } else {
         v.textContent = value;
     }
